@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import * as HeygenSDK from "@heygen/streaming-avatar"; // ✅ ПРАВИЛЬНЫЙ ИМПОРТ
+import HeygenSDK from "@heygen/streaming-avatar"; // ✅ Импорт ES-модуля
 
 dotenv.config(); // Загружаем переменные из .env
 
@@ -51,7 +51,7 @@ app.post("/chat", async (req, res) => {
     await avatar.speak({
         sessionId: sessionData.session_id,
         text: botpressReply,
-        task_type: HeygenSDK.TaskType.REPEAT, // Используем TaskType из HeygenSDK
+        task_type: HeygenSDK.TaskType.REPEAT,
     });
 
     res.json({ reply: botpressReply });
