@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import HeygenStreamingAvatar from "@heygen/streaming-avatar"; // <-- исправленный импорт
+import * as HeygenStreamingAvatar from "@heygen/streaming-avatar"; // Исправленный импорт
 
 dotenv.config(); // Загружаем переменные из .env
 
