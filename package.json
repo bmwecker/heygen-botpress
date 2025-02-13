@@ -1,5 +1,5 @@
 {
-  "type": "commonjs",
+  "type": "module", // ✅ Используем ES-модули
   "name": "heygen-botpress",
   "version": "1.0.0",
   "main": "index.js",
