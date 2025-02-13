@@ -1,11 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
-const HeygenSDK = require("@heygen/streaming-avatar");
+const HeygenSDK = require("@heygen/streaming-avatar"); // ✅ CommonJS, исправлено
 
 dotenv.config(); // Загружаем переменные из .env
-
-const HeygenSDK = require("@heygen/streaming-avatar"); // ✅ CommonJS
 
 const app = express();
 app.use(cors());
@@ -15,7 +13,7 @@ const avatar = new HeygenSDK.StreamingAvatar({ token: process.env.HEYGEN_ACCESS_
 
 let sessionData = null;
 
-//1️⃣ Создаём сессию в HeyGen
+// 1️⃣ Создаём сессию в HeyGen
 const startSession = async () => {
     sessionData = await avatar.createStartAvatar({
         avatarName: "DoctorAI",
