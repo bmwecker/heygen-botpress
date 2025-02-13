@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { StreamingAvatar, TaskType } from "@heygen/streaming-avatar"; // ✅ ES-модули
+import * as HeygenSDK from "@heygen/streaming-avatar"; // ✅ ПРАВИЛЬНЫЙ ИМПОРТ
 
 dotenv.config(); // Загружаем переменные из .env
 
@@ -9,11 +9,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const avatar = new StreamingAvatar({ token: process.env.HEYGEN_ACCESS_TOKEN });
+const avatar = new HeygenSDK.StreamingAvatar({ token: process.env.HEYGEN_ACCESS_TOKEN });
 
 let sessionData = null;
 
-//1️⃣ Создаём сессию в HeyGen
+// 1️⃣ Создаём сессию в HeyGen
 const startSession = async () => {
     sessionData = await avatar.createStartAvatar({
         avatarName: "DoctorAI",
@@ -51,7 +51,7 @@ app.post("/chat", async (req, res) => {
     await avatar.speak({
         sessionId: sessionData.session_id,
         text: botpressReply,
-        task_type: TaskType.REPEAT,
+        task_type: HeygenSDK.TaskType.REPEAT, // Используем TaskType из HeygenSDK
     });
 
     res.json({ reply: botpressReply });
