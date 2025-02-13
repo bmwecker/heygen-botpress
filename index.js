@@ -1,7 +1,7 @@
-import express from "express";
-import cors from "cors";
-import { StreamingAvatar, TaskType } from "@heygen/streaming-avatar";
-import dotenv from "dotenv";
+const express = require("express");
+const cors = require("cors");
+const dotenv = require("dotenv");
+const { StreamingAvatar, TaskType } = require("@heygen/streaming-avatar");
 
 dotenv.config(); // Загружаем переменные из .env
 

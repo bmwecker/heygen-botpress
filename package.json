@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "heygen-botpress",
   "version": "1.0.0",
   "description": "",
@@ -9,7 +10,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "dependencies": {
     "@heygen/streaming-avatar": "^2.0.9",
     "cors": "^2.8.5",
