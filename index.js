@@ -5,7 +5,7 @@ const HeygenSDK = require("@heygen/streaming-avatar");
 
 dotenv.config(); // Загружаем переменные из .env
 
-const HeygenSDK = await import("@heygen/streaming-avatar"); // ✅ Динамический импорт
+const HeygenSDK = require("@heygen/streaming-avatar"); // ✅ CommonJS
 
 const app = express();
 app.use(cors());
