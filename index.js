@@ -1,7 +1,7 @@
-import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
-import * as HeygenSDK from "@heygen/streaming-avatar"; // ✅ Новый импорт
+const express = require("express");
+const cors = require("cors");
+const dotenv = require("dotenv");
+const HeygenSDK = require("@heygen/streaming-avatar"); // ✅ CommonJS импорт
 
 dotenv.config(); // Загружаем переменные из .env
 
