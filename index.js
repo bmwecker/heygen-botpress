@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import HeygenStreamingAvatar from "@heygen/streaming-avatar"; // ✅ Исправленный импорт
+import { StreamingAvatar } from "@heygen/streaming-avatar"; // ✅ Исправленный импорт
 
 dotenv.config(); // Загружаем переменные из .env
 
@@ -9,7 +9,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const avatar = new HeygenStreamingAvatar({ token: process.env.HEYGEN_ACCESS_TOKEN });
+const avatar = new StreamingAvatar({ token: process.env.HEYGEN_ACCESS_TOKEN });
 
 let sessionData = null;
 
