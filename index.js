@@ -1,64 +1,65 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { StreamingAvatar } from "@heygen/streaming-avatar"; // ✅ Исправленный импорт
 
 dotenv.config(); // Загружаем переменные из .env
+
+const HeygenSDK = await import("@heygen/streaming-avatar"); // ✅ Динамический импорт
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-const avatar = new StreamingAvatar({ token: process.env.HEYGEN_ACCESS_TOKEN });
+const avatar = new HeygenSDK.StreamingAvatar({ token: process.env.HEYGEN_ACCESS_TOKEN });
 
 let sessionData = null;
 
 //1️⃣ Создаём сессию в HeyGen
 const startSession = async () => {
-  sessionData = await avatar.createStartAvatar({
-    avatarName: "DoctorAI",
-    quality: "high",
-    disableIdleTimeout: true,
-  });
+    sessionData = await avatar.createStartAvatar({
+        avatarName: "DoctorAI",
+        quality: "high",
+        disableIdleTimeout: true,
+    });
 
-  console.log("🎬 Сессия HeyGen запущена:", sessionData.session_id);
+    console.log("🎬 Сессия HeyGen запущена:", sessionData.session_id);
 };
 
 // 2️⃣ Отправляем текст в Botpress
 const sendToBotpress = async (text) => {
-  const response = await fetch(process.env.BOTPRESS_SERVER + "/api/v1/chat", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ message: text }),
-  });
+    const response = await fetch(process.env.BOTPRESS_SERVER + "/api/v1/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: text }),
+    });
 
-  const botData = await response.json();
-  return botData.reply;
+    const botData = await response.json();
+    return botData.reply;
 };
 
 // 3️⃣ API для общения с аватаром
 app.post("/chat", async (req, res) => {
-  const { text } = req.body;
-  console.log("🗣 Пользователь сказал:", text);
+    const { text } = req.body;
+    console.log("🗣 Пользователь сказал:", text);
 
-  if (!sessionData) {
-    await startSession();
-  }
+    if (!sessionData) {
+        await startSession();
+    }
 
-  const botpressReply = await sendToBotpress(text);
-  console.log("🤖 Botpress ответил:", botpressReply);
+    const botpressReply = await sendToBotpress(text);
+    console.log("🤖 Botpress ответил:", botpressReply);
 
-  await avatar.speak({
-    sessionId: sessionData.session_id,
-    text: botpressReply,
-    task_type: TaskType.REPEAT,
-  });
+    await avatar.speak({
+        sessionId: sessionData.session_id,
+        text: botpressReply,
+        task_type: HeygenSDK.TaskType.REPEAT,
+    });
 
-  res.json({ reply: botpressReply });
+    res.json({ reply: botpressReply });
 });
 
 // 4️⃣ Запускаем сервер
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`🚀 Сервер запущен на порту ${PORT}`);
+    console.log(`🚀 Сервер запущен на порту ${PORT}`);
 });
