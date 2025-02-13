@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { StreamingAvatar, TaskType } from "@heygen/streaming-avatar";
+import HeygenStreamingAvatar from "@heygen/streaming-avatar"; // <-- исправленный импорт
 
 dotenv.config(); // Загружаем переменные из .env
 
